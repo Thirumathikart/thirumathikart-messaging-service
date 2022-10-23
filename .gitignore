@@ -1,0 +1,5 @@
+.env
+server
+docker-data-mysql
+.vscode
+pg_db
