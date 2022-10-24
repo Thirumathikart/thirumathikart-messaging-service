@@ -14,7 +14,7 @@ type NotificationRPCServer struct {
 	notification.UnimplementedNotificationServiceServer
 }
 
-func (NotificationRPCServer) SendSinglePushNotification(ctx context.Context, request *notification.SingleNotificationRequest) (*notification.SingleNotificationResponse, error) {
+func (NotificationRPCServer) SendSinglePushNotificationRPC(ctx context.Context, request *notification.SingleNotificationRequest) (*notification.SingleNotificationResponse, error) {
 	decodedKey, err := middlewares.DecodedFireBaseKey()
 
 	if err != nil {
@@ -51,7 +51,7 @@ func (NotificationRPCServer) SendSinglePushNotification(ctx context.Context, req
 	return &notification.SingleNotificationResponse{IsSuccess: true}, nil
 }
 
-func (NotificationRPCServer) SendMultiplePushNotification(ctx context.Context, request *notification.MultipleNotificationRequest) (*notification.MultipleNotificationResponse, error) {
+func (NotificationRPCServer) SendMultiplePushNotificationRPC(ctx context.Context, request *notification.MultipleNotificationRequest) (*notification.MultipleNotificationResponse, error) {
 	decodedKey, err := middlewares.DecodedFireBaseKey()
 
 	if err != nil {

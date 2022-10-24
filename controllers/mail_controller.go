@@ -13,7 +13,7 @@ type MailRPCServer struct {
 	mail.UnimplementedMailServiceServer
 }
 
-func (MailRPCServer) SendSingleMail(ctx context.Context, request *mail.SingleMailRequest) (*mail.SingleMailResponse, error) {
+func (MailRPCServer) SendSingleMailRPC(ctx context.Context, request *mail.SingleMailRequest) (*mail.SingleMailResponse, error) {
 
 	mailer := middlewares.SetupMailer()
 	smtpClient, err := mailer.Connect()

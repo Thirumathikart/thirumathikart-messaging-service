@@ -17,7 +17,7 @@ import (
 func main() {
 	var flags *models.Flags
 	flag.Parse()
-
+	config.InitConfig()
 	port := flag.String("port", config.ServerPort, "port to be used")
 	ip := flag.String("ip", config.ServerHost, "ip to be used")
 

@@ -15,7 +15,7 @@ func SetupMailer() *mail.SMTPServer {
 	mailer.Port = config.MailPort
 	mailer.Username = config.MailUser
 	mailer.Password = config.MailPassword
-	mailer.Encryption = mail.EncryptionSTARTTLS
+	mailer.Encryption = mail.EncryptionSSL
 	mailer.KeepAlive = false
 	mailer.ConnectTimeout = 10 * time.Second
 	mailer.SendTimeout = 10 * time.Second
