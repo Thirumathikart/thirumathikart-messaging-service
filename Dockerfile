@@ -19,7 +19,6 @@ RUN apk add --no-cache make
 
 RUN go install github.com/cespare/reflex@latest
 
-
 ENTRYPOINT make watch
 
 

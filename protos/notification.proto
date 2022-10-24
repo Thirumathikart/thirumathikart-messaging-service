@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package rpcs;
+
+option go_package = "./notification";
+
+
+message SingleNotificationRequest {
+    string token =1;
+    string title = 2;
+    string body = 3;
+} 
+
+message SingleNotificationResponse {
+    bool isSuccess = 1;
+} 
+
+message MultipleNotificationRequest {
+    repeated string token = 1;
+    string title = 2;
+    string body = 3;
+}
+
+message MultipleNotificationResponse {
+    int64 successCount = 1;
+    int64 failureCount = 2;
+} 
+
+
+service NotificationService {
+    rpc SendSingleNotificationRPC(SingleNotificationRequest) returns (SingleNotificationResponse){};
+    rpc SendMultipleNotificationRPC(MultipleNotificationRequest) returns (MultipleNotificationResponse){};
+}

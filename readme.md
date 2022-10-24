@@ -5,6 +5,7 @@ ___
 * [Go](https://go.dev/)
 * [golangci](https://golangci-lint.run/usage/install/)
 * [Docker](https://www.docker.com/)
+* [protobuff](https://grpc.io/docs/protoc-installation/)
 
 ### Setup
 * Configure .vscode/settings.json
@@ -30,10 +31,22 @@ ___
     ``` sh
     cp .env.example .env
     ```
- * Enable githooks
+* Enable githooks
     ``` sh
     git config core.hooksPath .githooks
     ```
+* Add the following in ~/.bash_profile
+    ```sh
+    export GOPATH=$HOME/go
+    export PATH=$PATH:$GOPATH/bin
+    ```
+* Install Protobuff Dependencies
+   ```sh
+   go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+   ```
+   ```sh
+   go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+   ```       
 
 
 * Configure database settings in config.json
