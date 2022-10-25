@@ -3,33 +3,17 @@ package controllers
 import (
 	"context"
 
-	firebase "firebase.google.com/go/v4"
 	messaging "firebase.google.com/go/v4/messaging"
-	"github.com/thirumathikart/thirumathikart-messaging-service/middlewares"
+	"github.com/thirumathikart/thirumathikart-messaging-service/config"
 	notification "github.com/thirumathikart/thirumathikart-messaging-service/rpcs/notification"
-	"google.golang.org/api/option"
 )
 
 type NotificationRPCServer struct {
 	notification.UnimplementedNotificationServiceServer
 }
 
-func (NotificationRPCServer) SendSinglePushNotificationRPC(ctx context.Context, request *notification.SingleNotificationRequest) (*notification.SingleNotificationResponse, error) {
-	decodedKey, err := middlewares.DecodedFireBaseKey()
-
-	if err != nil {
-		return &notification.SingleNotificationResponse{IsSuccess: false}, err
-	}
-
-	opts := []option.ClientOption{option.WithCredentialsJSON(decodedKey)}
-
-	app, err := firebase.NewApp(context.Background(), nil, opts...)
-
-	if err != nil {
-		return &notification.SingleNotificationResponse{IsSuccess: false}, err
-	}
-
-	fcmClient, err := app.Messaging(context.Background())
+func (NotificationRPCServer) SendSingleNotificationRPC(ctx context.Context, request *notification.SingleNotificationRequest) (*notification.SingleNotificationResponse, error) {
+	fcmClient, err := config.GetFCM()
 
 	if err != nil {
 		return &notification.SingleNotificationResponse{IsSuccess: false}, err
@@ -51,22 +35,8 @@ func (NotificationRPCServer) SendSinglePushNotificationRPC(ctx context.Context, 
 	return &notification.SingleNotificationResponse{IsSuccess: true}, nil
 }
 
-func (NotificationRPCServer) SendMultiplePushNotificationRPC(ctx context.Context, request *notification.MultipleNotificationRequest) (*notification.MultipleNotificationResponse, error) {
-	decodedKey, err := middlewares.DecodedFireBaseKey()
-
-	if err != nil {
-		return nil, err
-	}
-
-	opts := []option.ClientOption{option.WithCredentialsJSON(decodedKey)}
-
-	app, err := firebase.NewApp(context.Background(), nil, opts...)
-
-	if err != nil {
-		return nil, err
-	}
-
-	fcmClient, err := app.Messaging(context.Background())
+func (NotificationRPCServer) SendMultipleNotificationRPC(ctx context.Context, request *notification.MultipleNotificationRequest) (*notification.MultipleNotificationResponse, error) {
+	fcmClient, err := config.GetFCM()
 
 	if err != nil {
 		return nil, err

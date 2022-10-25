@@ -18,7 +18,7 @@ var MailUser string
 var MailPassword string
 var FireBaseAuthKey string
 
-func InitConfig() {
+func SetupEnvironment() {
 	err := godotenv.Load()
 	if err != nil {
 		fmt.Println(color.RedString("Error loading .env"))
@@ -32,7 +32,6 @@ func InitConfig() {
 	FireBaseAuthKey = os.Getenv("FIREBASE_AUTH_KEY")
 	MailPort, err = strconv.Atoi(os.Getenv("MAIL_PORT"))
 	if err != nil {
-		// ... handle error
 		panic(err)
 	}
 }

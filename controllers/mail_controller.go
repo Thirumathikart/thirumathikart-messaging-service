@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	"github.com/thirumathikart/thirumathikart-messaging-service/middlewares"
+	"github.com/thirumathikart/thirumathikart-messaging-service/config"
 	mail "github.com/thirumathikart/thirumathikart-messaging-service/rpcs/mail"
 	simplemail "github.com/xhit/go-simple-mail/v2"
 )
@@ -15,11 +15,8 @@ type MailRPCServer struct {
 
 func (MailRPCServer) SendSingleMailRPC(ctx context.Context, request *mail.SingleMailRequest) (*mail.SingleMailResponse, error) {
 
-	mailer := middlewares.SetupMailer()
-	smtpClient, err := mailer.Connect()
-	if err != nil {
-		log.Fatal(err)
-	}
+	smtpClient := config.GetMailer()
+
 	email := simplemail.NewMSG().SetFrom("From Thirumathikart <thirumathikart@nitt.edu>").
 		AddTo(request.Reciever).
 		SetSubject(request.Subject).SetBody(simplemail.TextPlain, request.Body)
@@ -34,7 +31,7 @@ func (MailRPCServer) SendSingleMailRPC(ctx context.Context, request *mail.Single
 		log.Fatal(email.Error)
 	}
 
-	err = email.Send(smtpClient)
+	err := email.Send(&smtpClient)
 	IsSuccess := true
 	if err != nil {
 		IsSuccess = false
