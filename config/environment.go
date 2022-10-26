@@ -17,6 +17,7 @@ var MailHost string
 var MailUser string
 var MailPassword string
 var FireBaseAuthKey string
+var ServerSecret string
 
 func SetupEnvironment() {
 	err := godotenv.Load()
@@ -30,6 +31,7 @@ func SetupEnvironment() {
 	MailUser = os.Getenv("MAIL_USER")
 	MailPassword = os.Getenv("MAIL_PASSWORD")
 	FireBaseAuthKey = os.Getenv("FIREBASE_AUTH_KEY")
+	ServerSecret = os.Getenv("SERVER_SECRET")
 	MailPort, err = strconv.Atoi(os.Getenv("MAIL_PORT"))
 	if err != nil {
 		panic(err)
